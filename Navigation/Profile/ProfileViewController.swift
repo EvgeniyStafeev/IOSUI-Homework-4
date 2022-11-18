@@ -12,17 +12,12 @@ class ProfileViewController: UIViewController {
     var profileHeaderView = ProfileHeaderView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
+        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        profileHeaderView.backgroundColor = .lightGray
 
         viewConstraints()
     }
-    
-    private let profile: ProfileHeaderView = {
-        let profile = ProfileHeaderView()
-        profile.backgroundColor = .lightGray
-        profile.translatesAutoresizingMaskIntoConstraints = false
-        return profile
-    }()
     
     private lazy var newButton: UIButton = {
         let newButton = UIButton()
@@ -39,15 +34,15 @@ class ProfileViewController: UIViewController {
     }
     
     private func viewConstraints() {
-        view.addSubview(profile)
+        view.addSubview(profileHeaderView)
         view.addSubview(newButton)
         
         NSLayoutConstraint.activate([
             
-            profile.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            profile.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            profile.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profile.heightAnchor.constraint(equalToConstant: 220),
+            profileHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
             
             newButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             newButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),

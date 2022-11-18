@@ -7,13 +7,6 @@
 
 import UIKit
 
-extension UITextField {
-     func indent(size:CGFloat) {
-         self.leftView = UIView(frame: CGRect(x: self.frame.minX, y: self.frame.minY, width: size, height: self.frame.height))
-         self.leftViewMode = .always
-     }
- }
-
 class ProfileHeaderView: UIView {
     
     private var statusText = String()
@@ -21,70 +14,71 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
              super.init(frame: frame)
              setupLayout()
+        
          }
 
          required init?(coder: NSCoder) {
              super.init(coder: coder)
          }
 
-         lazy var profileAvatarImage: UIImageView = {
-             let tempImage = UIImage(named: "5631")
-             let profileAvatarImage = UIImageView()
-             profileAvatarImage.translatesAutoresizingMaskIntoConstraints = false
-             profileAvatarImage.clipsToBounds = true
-             profileAvatarImage.backgroundColor = .systemBackground
-             profileAvatarImage.layer.cornerRadius = 55.0
-             profileAvatarImage.layer.borderWidth = 3.0
-             profileAvatarImage.layer.borderColor = UIColor.white.cgColor
-             profileAvatarImage.image = tempImage
-             return profileAvatarImage
-         }()
-
-         lazy var profileNameLabel: UILabel = {
-             let profileNameLabel = UILabel()
-             profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
-             profileNameLabel.text = "Hipster Cat"
-             profileNameLabel.textColor = .black
-             profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-             return profileNameLabel
-         }()
-
-         lazy var profileStatusTextField: UILabel = {
-             let profileStatusTextField = UILabel()
-             profileStatusTextField.translatesAutoresizingMaskIntoConstraints = false
-             profileStatusTextField.text = "Waiting for something..."
-             profileStatusTextField.textColor = .white
-             profileStatusTextField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-             profileStatusTextField.isUserInteractionEnabled = false
-             return profileStatusTextField
-         }()
-    
-         lazy var showStatusButton: UIButton = {
-                 let showStatusButton = UIButton()
-             showStatusButton.translatesAutoresizingMaskIntoConstraints = false
-             showStatusButton.backgroundColor = .systemBlue
-             showStatusButton.setTitle("Set status", for: .normal)
-             showStatusButton.setTitleColor(UIColor.white, for: .normal)
-             showStatusButton.layer.cornerRadius = 12.0
-             showStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-             showStatusButton.layer.shadowRadius = 4.0
-             showStatusButton.layer.shadowColor = UIColor.black.cgColor
-             showStatusButton.layer.shadowOpacity = 0.7
-             showStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-                 return showStatusButton
+    lazy var profileAvatarImage: UIImageView = {
+                 let tempImage = UIImage(named: "5631")
+                 let profileAvatarImage = UIImageView()
+                 profileAvatarImage.translatesAutoresizingMaskIntoConstraints = false
+                 profileAvatarImage.clipsToBounds = true
+                 profileAvatarImage.backgroundColor = .systemBackground
+                 profileAvatarImage.layer.cornerRadius = 55.0
+                 profileAvatarImage.layer.borderWidth = 3.0
+                 profileAvatarImage.layer.borderColor = UIColor.white.cgColor
+                 profileAvatarImage.image = tempImage
+                 return profileAvatarImage
              }()
     
-         @objc private func buttonPressed() {
-             profileStatusTextField.text = statusText
-             self.endEditing(true)
-             print(statusText)
-         }
+    lazy var profileNameLabel: UILabel = {
+        let profileNameLabel = UILabel()
+        profileNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileNameLabel.text = "Hipster Cat"
+        profileNameLabel.textColor = .black
+        profileNameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        return profileNameLabel
+    }()
+    
+    lazy var profileStatusTextField: UILabel = {
+        let profileStatusTextField = UILabel()
+        profileStatusTextField.translatesAutoresizingMaskIntoConstraints = false
+        profileStatusTextField.text = "Waiting for something..."
+        profileStatusTextField.textColor = .gray
+        profileStatusTextField.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        profileStatusTextField.isUserInteractionEnabled = false
+        return profileStatusTextField
+    }()
+    
+    lazy var showStatusButton: UIButton = {
+            let showStatusButton = UIButton()
+        showStatusButton.translatesAutoresizingMaskIntoConstraints = false
+        showStatusButton.backgroundColor = .systemBlue
+        showStatusButton.setTitle("Set status", for: .normal)
+        showStatusButton.setTitleColor(UIColor.white, for: .normal)
+        showStatusButton.layer.cornerRadius = 12.0
+        showStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        showStatusButton.layer.shadowRadius = 4.0
+        showStatusButton.layer.shadowColor = UIColor.black.cgColor
+        showStatusButton.layer.shadowOpacity = 0.7
+        showStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+            return showStatusButton
+        }()
+    
+    @objc private func buttonPressed() {
+        profileStatusTextField.text = statusText
+        self.endEditing(true)
+        print(statusText)
+    }
     
     lazy var newStatus: UITextField = {
         let newStatus = UITextField()
         newStatus.translatesAutoresizingMaskIntoConstraints = false
         newStatus.indent(size: 10)
-        newStatus.text = "Enter text here ..."
+        newStatus.placeholder = "Enter text here ..."
         newStatus.textColor = .black
         newStatus.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         newStatus.backgroundColor = .white
@@ -96,7 +90,7 @@ class ProfileHeaderView: UIView {
          }()
     
     @objc private func statusTextChanges() {
-            statusText = newStatus.text!
+        statusText = newStatus.text ?? "No text"
             print(newStatus)
         }
     
